@@ -1,0 +1,55 @@
+package com.example.userservice.controller;
+
+import com.example.userservice.dtos.category.CategoryCreateDto;
+import com.example.userservice.dtos.category.CategoryDto;
+import com.example.userservice.dtos.category.CategoryUpdateDto;
+import com.example.userservice.entity.Category;
+import com.example.userservice.payloads.ApiResponse;
+import com.example.userservice.service.CategoryService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/category")
+public class CategoryController {
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @PostMapping("/create")
+    public ResponseEntity<ApiResponse> create(@Valid @RequestBody CategoryCreateDto categoryCreate) {
+       ApiResponse response = categoryService.create(categoryCreate);
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ApiResponse> update(@Valid @RequestBody CategoryUpdateDto categoryUpdate, @PathVariable Long id) {
+        ApiResponse response = categoryService.updateCategory(categoryUpdate, id);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @GetMapping("/getall")
+    public ResponseEntity<List<CategoryDto>> getAll(){
+        List<CategoryDto> result = categoryService.getAllCategories();
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<CategoryDto> get(@PathVariable Long id){
+        CategoryDto result = categoryService.getCategoryById(id);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ApiResponse> delete(@PathVariable Long id) {
+        ApiResponse response = categoryService.deleteCategory(id);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+}
