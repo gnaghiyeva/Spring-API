@@ -6,6 +6,7 @@ import com.example.userservice.dtos.product.ProductDto;
 import com.example.userservice.dtos.product.ProductUpdateDto;
 import com.example.userservice.entity.Category;
 import com.example.userservice.entity.Product;
+import com.example.userservice.exceptions.ResourceNotFoundException;
 import com.example.userservice.payloads.ApiResponse;
 import com.example.userservice.repository.ProductRepository;
 import com.example.userservice.service.CategoryService;
@@ -36,12 +37,12 @@ public class ProductServiceImpl  implements ProductService {
         Category mapCategory = modelMapper.map(category, Category.class);
         product.setCategory(mapCategory);
         productRepository.save(product);
-        return null;
+        return new ApiResponse(true,"Product created successfully!");
     }
 
     @Override
     public ApiResponse updateProduct(ProductUpdateDto productUpdate, Long id) {
-        Product product = productRepository.findById(id).orElseThrow();
+        Product product = productRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Category","id", id));
 //        modelMapper.map(productUpdate, product);
         product.setName(productUpdate.getName());
         product.setPrice(productUpdate.getPrice());
@@ -62,7 +63,7 @@ public class ProductServiceImpl  implements ProductService {
 
     @Override
     public ProductDto getProductById(Long id) {
-        Product product = productRepository.findById(id).orElseThrow();
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
         ProductDto result = modelMapper.map(product, ProductDto.class);
         return result;
     }
@@ -76,7 +77,7 @@ public class ProductServiceImpl  implements ProductService {
 
     @Override
     public ApiResponse deleteProduct(Long id) {
-        Product product = productRepository.findById(id).orElseThrow();
+        Product product = productRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Product","id", id));
         productRepository.delete(product);
         return new ApiResponse(true, "Product deleted successfully");
     }

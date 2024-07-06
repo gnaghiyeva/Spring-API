@@ -9,6 +9,7 @@ import lombok.Data;
 
 @Data
 public class ProductDto {
+    private Long id;
     @NotEmpty(message = "Product name may not be empty")
     @NotNull(message = "Product name may not be empty")
     @NotBlank(message = "Product name may not be empty")
