@@ -48,8 +48,8 @@ public class CategoryServiceImpl implements CategoryService {
     public ApiResponse updateCategory(CategoryUpdateDto categoryUpdate, Long id) {
         Category findCategory = categoryRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Category","id", id));
         findCategory.setName(categoryUpdate.getName());
-        categoryRepository.saveAndFlush(findCategory);
-        return new ApiResponse(true,"Category updated successfully!");
+        Category updatedCategory =  categoryRepository.saveAndFlush(findCategory);
+        return new ApiResponse(true,"Category updated successfully!",updatedCategory);
     }
 
     @Override

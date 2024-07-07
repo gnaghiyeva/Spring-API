@@ -1,5 +1,5 @@
 package com.example.userservice.controller;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.example.userservice.dtos.category.CategoryCreateDto;
 import com.example.userservice.dtos.product.ProductCreateDto;
 import com.example.userservice.dtos.product.ProductDto;
@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/product")
+@RequestMapping("api/products")
+@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -27,7 +28,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> update(@PathVariable Long id, @RequestBody ProductUpdateDto productUpdate) {
+    public ResponseEntity<ApiResponse> update(@RequestBody ProductUpdateDto productUpdate, @PathVariable Long id) {
         ApiResponse response = productService.updateProduct(productUpdate,id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

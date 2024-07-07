@@ -42,16 +42,25 @@ public class ProductServiceImpl  implements ProductService {
 
     @Override
     public ApiResponse updateProduct(ProductUpdateDto productUpdate, Long id) {
-        Product product = productRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Category","id", id));
-//        modelMapper.map(productUpdate, product);
-        product.setName(productUpdate.getName());
-        product.setPrice(productUpdate.getPrice());
-        product.setPhotoUrl(productUpdate.getPhotoUrl());
-        CategoryDto category = categoryService.getCategoryById(productUpdate.getCategoryId());
-        Category mapCategory = modelMapper.map(category, Category.class);
-        product.setCategory(mapCategory);
-        productRepository.save(product);
-        return new ApiResponse(true, "Product updated successfully");
+        Product findproduct = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
+
+        if (productUpdate.getName() != null) {
+            findproduct.setName(productUpdate.getName());
+        }
+        if (productUpdate.getPrice() != 0) {
+            findproduct.setPrice(productUpdate.getPrice());
+        }
+        if (productUpdate.getPhotoUrl() != null) {
+            findproduct.setPhotoUrl(productUpdate.getPhotoUrl());
+        }
+        if (productUpdate.getCategoryId() != null) {
+            CategoryDto category = categoryService.getCategoryById(productUpdate.getCategoryId());
+            Category mapCategory = modelMapper.map(category, Category.class);
+            findproduct.setCategory(mapCategory);
+        }
+
+        Product updatedProduct = productRepository.save(findproduct);
+        return new ApiResponse(true, "Product updated successfully", updatedProduct.getName());
     }
 
     @Override
