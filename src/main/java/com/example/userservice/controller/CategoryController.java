@@ -22,14 +22,14 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping("/create")
-    public ResponseEntity<ApiResponse> create(@Valid @RequestBody CategoryCreateDto categoryCreate) {
+    @PostMapping(consumes = {"multipart/form-data"})
+    public ResponseEntity<ApiResponse> create(@Valid @ModelAttribute CategoryCreateDto categoryCreate) {
        ApiResponse response = categoryService.create(categoryCreate);
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> update(@Valid @RequestBody CategoryUpdateDto categoryUpdate, @PathVariable Long id) {
+    @PutMapping(value = "/{id}",consumes = {"multipart/form-data"})
+    public ResponseEntity<ApiResponse> update(@Valid @ModelAttribute CategoryUpdateDto categoryUpdate, @PathVariable Long id) {
         ApiResponse response = categoryService.updateCategory(categoryUpdate, id);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }

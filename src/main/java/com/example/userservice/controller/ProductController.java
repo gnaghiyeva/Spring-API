@@ -21,14 +21,14 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping
-    public ResponseEntity<ApiResponse> create(@Valid @RequestBody ProductCreateDto productCreate) {
+    @PostMapping(consumes = {"multipart/form-data"})
+    public ResponseEntity<ApiResponse> create(@Valid @ModelAttribute ProductCreateDto productCreate) {
         ApiResponse response = productService.create(productCreate);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> update(@RequestBody ProductUpdateDto productUpdate, @PathVariable Long id) {
+    @PutMapping(value = "/{id}",consumes = {"multipart/form-data"})
+    public ResponseEntity<ApiResponse> update(@ModelAttribute ProductUpdateDto productUpdate, @PathVariable Long id) {
         ApiResponse response = productService.updateProduct(productUpdate,id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
