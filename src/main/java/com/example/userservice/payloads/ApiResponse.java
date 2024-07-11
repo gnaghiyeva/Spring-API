@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 public class ApiResponse {
     private boolean success;
     private String message;
-    private Object data; // You can use Object to hold any type of data
+    private Object data;
 
-    // Constructors, getters and setters
     public ApiResponse(boolean success, String message) {
         this.success = success;
         this.message = message;
