@@ -1,6 +1,31 @@
 import { BASE_URL } from "./base_url";
 import axios from 'axios'
 
+export const signIn = async ({ username, password }) => {
+    try {
+        const response = await fetch(`${BASE_URL}/auth/signin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ usernameOrEmail: username, password }),
+            credentials: 'include', // Gerekiyorsa ekleyin
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            console.error('Sign-in failed', response);
+            return { auth: false };
+        }
+    } catch (error) {
+        console.error('An error occurred during sign-in', error);
+        return { auth: false };
+    }
+};
+
+
 //products
 export const getAllProducts = async()=>{
     let globalData
