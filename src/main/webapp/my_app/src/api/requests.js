@@ -36,27 +36,45 @@ export const getAllProducts = async()=>{
     return globalData
 }
 
-//
-// export const getProductById = async(id)=>{
-//     let globalData;
-//     await axios.get(`${BASE_URL}/product/${id}`).then((res)=>{
-//         globalData=res.data
-//     })
-//     return globalData
+// export const postProduct = async(newProduct)=>{
+//     axios.post(`${BASE_URL}/products`,newProduct)
 // }
-//
-// export const deleteProduct = async(id)=>{
-//     let deletedService
-//     await axios.delete(`${BASE_URL}/product/${id}`).then((res)=>{
-//         deletedService=res.data
-//     })
-//     return deletedService
-// }
+
+
+export const postProduct = async (formData) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/products`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error posting product:', error.response?.data || error.message); // Log the error details
+        throw error;
+    }
+
+};
+
+export const deleteProduct = async(id)=>{
+    let deletedService
+    await axios.delete(`${BASE_URL}/products/${id}`).then((res)=>{
+        deletedService=res.data
+    })
+    return deletedService
+}
 //
 // export const editProduct= (id,updatedProduct)=>{
 //     axios.put(`${BASE_URL}/product/${id}`,updatedProduct)
 // }
 //
-// export const postProduct = (newProduct)=>{
-//     axios.post(`${BASE_URL}/product`,newProduct)
-// }
+
+//categories
+export const getAllCategories = async()=>{
+    let globalData
+    await axios.get(`${BASE_URL}/category`)
+        .then(res => {
+            globalData = res.data;
+        })
+    return globalData
+}
