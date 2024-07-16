@@ -28,6 +28,7 @@ function BasicExample() {
                     <Nav className="me-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
                         <Nav.Link href="/admin/products">Products</Nav.Link>
+                        <Nav.Link href="/admin/categories">Categories</Nav.Link>
                     </Nav>
                     <LogoutIcon onClick={handleLogout} />
                 </Navbar.Collapse>

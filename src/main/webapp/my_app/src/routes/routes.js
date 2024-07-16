@@ -6,6 +6,9 @@ import AdminLogin from "../pages/Admin/AdminLogin";
 import AdminProducts from "../pages/Admin/Products/AdminProducts";
 import AddProduct from "../pages/Admin/Products/AddProduct";
 import EditProduct from "../pages/Admin/Products/EditProduct";
+import AdminCategories from "../pages/Admin/Categories/AdminCategories";
+import EditCategory from "../pages/Admin/Categories/EditCategory";
+import AddCategory from "../pages/Admin/Categories/AddCategory";
 
 
 export const ROUTES = [
@@ -42,6 +45,18 @@ export const ROUTES = [
             {
                 path: 'products/edit/:id',
                 element: <EditProduct />
+            },
+            {
+                path: 'categories',
+                element: <AdminCategories/>
+            },
+            {
+                path: 'category/edit/:id',
+                element: <EditCategory/>
+            },
+            {
+                path: 'add-category',
+                element: <AddCategory/>
             },
 
         ]

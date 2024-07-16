@@ -92,3 +92,48 @@ export const getAllCategories = async()=>{
         })
     return globalData
 }
+
+export const deleteCategory = async(id)=>{
+    let deletedCategory
+    await axios.delete(`${BASE_URL}/category/${id}`).then((res)=>{
+        deletedCategory=res.data
+    })
+    return deletedCategory
+}
+
+export const getCategoryById = async(id)=>{
+    let globalData;
+    await axios.get(`${BASE_URL}/category/${id}`).then((res)=>{
+        globalData=res.data
+    })
+    return globalData
+}
+
+export const editCategory = async (id, updatedCategory) => {
+    try {
+        const response = await axios.put(`${BASE_URL}/category/${id}`, updatedCategory, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error editing product:', error);
+        throw error;
+    }
+};
+
+export const postCategory = async (formData) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/category`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error posting product:', error.response?.data || error.message); // Log the error details
+        throw error;
+    }
+
+};
