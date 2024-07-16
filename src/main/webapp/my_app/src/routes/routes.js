@@ -5,6 +5,7 @@ import Dashboard from "../pages/Admin/Dashboard/Dashboard";
 import AdminLogin from "../pages/Admin/AdminLogin";
 import AdminProducts from "../pages/Admin/Products/AdminProducts";
 import AddProduct from "../pages/Admin/Products/AddProduct";
+import EditProduct from "../pages/Admin/Products/EditProduct";
 
 
 export const ROUTES = [
@@ -37,6 +38,10 @@ export const ROUTES = [
             {
                 path: 'add-product',
                 element: <AddProduct/>
+            },
+            {
+                path: 'products/edit/:id',
+                element: <EditProduct />
             },
 
         ]

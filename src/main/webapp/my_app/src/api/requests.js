@@ -36,10 +36,6 @@ export const getAllProducts = async()=>{
     return globalData
 }
 
-// export const postProduct = async(newProduct)=>{
-//     axios.post(`${BASE_URL}/products`,newProduct)
-// }
-
 
 export const postProduct = async (formData) => {
     try {
@@ -63,11 +59,29 @@ export const deleteProduct = async(id)=>{
     })
     return deletedService
 }
-//
-// export const editProduct= (id,updatedProduct)=>{
-//     axios.put(`${BASE_URL}/product/${id}`,updatedProduct)
-// }
-//
+
+export const getProductById = async(id)=>{
+    let globalData;
+    await axios.get(`${BASE_URL}/products/${id}`).then((res)=>{
+        globalData=res.data
+    })
+    return globalData
+}
+
+export const editProduct = async (id, updatedProduct) => {
+    try {
+        const response = await axios.put(`${BASE_URL}/products/${id}`, updatedProduct, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error editing product:', error);
+        throw error;
+    }
+};
+
 
 //categories
 export const getAllCategories = async()=>{

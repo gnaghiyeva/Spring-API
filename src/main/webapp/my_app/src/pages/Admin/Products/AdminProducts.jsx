@@ -80,8 +80,7 @@ const AdminProducts = () => {
                                                                               }
                                                                           })
                                                                       }}/></TableCell>
-                                <TableCell align="center"><ModeEditIcon style={{fontSize: '33px'}}/></TableCell>
-
+                                <TableCell align="center"><Link to={`/admin/products/edit/${product.id}`}><ModeEditIcon style={{ fontSize: '33px' }} /></Link></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

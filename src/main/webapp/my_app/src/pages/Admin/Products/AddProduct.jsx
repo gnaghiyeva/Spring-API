@@ -25,6 +25,8 @@ const AddProduct = () => {
         getCategories();
     }, []);
 
+
+
     const handleSubmit = async (values, actions) => {
         const formData = new FormData();
         formData.append('photoFile', selectedImage);
