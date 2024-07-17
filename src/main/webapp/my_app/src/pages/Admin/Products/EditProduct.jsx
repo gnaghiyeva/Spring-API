@@ -19,10 +19,10 @@ const EditProduct = () => {
         getProductById(id).then((res) => {
             setProduct(res);
             formik.setValues({
-                photoFile: res.photoFile,
+                photoFile: res.photoUrl,
                 name: res.name,
                 price: res.price,
-                categoryName: res.categoryName,
+                categoryId: res.category.id, // category id set
             });
             setLoading(false);
         }).catch(error => {
@@ -44,7 +44,7 @@ const EditProduct = () => {
 
     const handleEdit = async (values, actions) => {
         const formData = new FormData();
-        if (values.photoFile !== product.photoFile) {
+        if (values.photoFile !== product.photoUrl) {
             formData.append('photoFile', values.photoFile);
         }
         if (values.name !== product.name) {
@@ -53,8 +53,8 @@ const EditProduct = () => {
         if (values.price !== product.price) {
             formData.append('price', values.price);
         }
-        if (values.categoryName !== product.categoryName) {
-            formData.append('categoryName', values.categoryName);
+        if (values.categoryId !== product.category.id) {
+            formData.append('categoryId', values.categoryId);
         }
 
         // Log FormData contents
@@ -66,7 +66,7 @@ const EditProduct = () => {
             await editProduct(id, formData);
             const updatedProducts = products.map((item) => {
                 if (item.id === id) {
-                    return { ...item, ...values };
+                    return { ...item, ...values, category: { ...item.category, id: values.categoryId } };
                 }
                 return item;
             });
@@ -93,7 +93,7 @@ const EditProduct = () => {
         initialValues: {
             name: '',
             price: '',
-            categoryName: '',
+            categoryId: '',
             photoFile: null,
         },
         onSubmit: handleEdit,
@@ -134,14 +134,14 @@ const EditProduct = () => {
                             <Select
                                 labelId='category-select-label'
                                 id='category-select'
-                                name='categoryName'
-                                value={formik.values.categoryName || ''}
+                                name='categoryId'
+                                value={formik.values.categoryId || ''}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 label='Category'
                             >
                                 {categories.map((category) => (
-                                    <MenuItem key={category.id} value={category.name}>
+                                    <MenuItem key={category.id} value={category.id}>
                                         {category.name}
                                     </MenuItem>
                                 ))}

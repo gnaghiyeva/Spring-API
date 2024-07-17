@@ -37,7 +37,8 @@ const AdminProducts = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell align="center">Image</TableCell>
-                            <TableCell align="center">Name</TableCell>
+                            <TableCell align="center">Product Name</TableCell>
+                            <TableCell align="center">Category Name</TableCell>
                             <TableCell align="center">Price</TableCell>
                             <TableCell align="center">Delete</TableCell>
                             <TableCell align="center">Edit</TableCell>
@@ -55,7 +56,7 @@ const AdminProducts = () => {
                                 </TableCell>
                                 <TableCell align="center">{product.name}</TableCell>
                                 <TableCell align="center">{product.category.name}</TableCell>
-
+                                <TableCell align="center">{product.price}</TableCell>
                                 <TableCell align="center"><DeleteIcon style={{color: 'red', fontSize: '33px'}}
                                                                       onClick={() => {
                                                                           Swal.fire({
