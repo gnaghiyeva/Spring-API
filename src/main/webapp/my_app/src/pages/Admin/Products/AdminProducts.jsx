@@ -28,9 +28,9 @@ const AdminProducts = () => {
 
     return (
         <>
-            <div style={{textAlign:'center',fontSize:'1.5em'}}>
-                Add Product<a href='/admin/add-product'><LibraryAddIcon/></a>
-            </div>
+            <article style={{textAlign: 'center', fontFamily: 'Lobster', marginTop: '40px'}}>
+                <h1>Products</h1>  <a href='/admin/add-product'><LibraryAddIcon/></a>
+            </article>
             <TableContainer component={Paper} style={{width: '60%', margin: '30px auto'}}>
 
                 <Table sx={{minWidth: 650}} aria-label="simple table">
