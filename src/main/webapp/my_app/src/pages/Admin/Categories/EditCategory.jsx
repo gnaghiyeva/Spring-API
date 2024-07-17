@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from 'react'
-import {useNavigate, useParams} from 'react-router-dom';
-import {useCategoryContext} from '../../../context/CategoryContext';
-import {editCategory, editProduct, getCategoryById} from '../../../api/requests';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCategoryContext } from '../../../context/CategoryContext';
+import { editCategory, getCategoryById } from '../../../api/requests';
 
-import {useFormik} from 'formik';
-import {Button, CircularProgress, TextField} from '@mui/material';
+import { useFormik } from 'formik';
+import { Button, CircularProgress, TextField } from '@mui/material';
 
 import Swal from "sweetalert2";
 
 const EditCategory = () => {
-    const {id} = useParams()
-    const navigate = useNavigate()
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [categories, setCategories] = useCategoryContext();
-    const [category, setCategory] = useState({})
-    const [loading, setLoading] = useState([])
+    const [category, setCategory] = useState({});
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getCategoryById(id).then((res) => {
@@ -21,9 +21,10 @@ const EditCategory = () => {
             formik.setValues({
                 name: res.name,
             });
-            setLoading(false)
+            setLoading(false);
         }).catch(error => {
-            console.error('Error fetching product:', error);
+            console.error('Error fetching category:', error);
+            setLoading(false);
         });
     }, [id]);
 
@@ -47,7 +48,7 @@ const EditCategory = () => {
             Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: `Product edited successfully`,
+                title: `Category edited successfully`,
                 showConfirmButton: false,
                 timer: 1500,
             });
@@ -58,36 +59,45 @@ const EditCategory = () => {
             console.error('Error editing category:', error);
             // Handle the error (show alert, log, etc.)
         }
-
-
-    }
+    };
 
     const formik = useFormik({
         initialValues: {
-            name: category.name,
+            name: '',
         },
+        onSubmit: handleEdit,
+    });
 
-        onSubmit: handleEdit
-    })
     return (
         <>
-
-            <h1 style={{textAlign: 'center', fontFamily: 'Lobster'}}>Editing Category</h1>
-            {loading ? <div style={{textAlign: 'center'}}><CircularProgress color="secondary"/></div> :
+            <h1 style={{ textAlign: 'center', fontFamily: 'Lobster' }}>Editing Category</h1>
+            {loading ? (
+                <div style={{ textAlign: 'center', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <CircularProgress color="secondary" />
+                </div>
+            ) : (
                 <form onSubmit={formik.handleSubmit}>
-                    <div style={{textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                        <TextField style={{width: '300px'}} onChange={formik.handleChange} onBlur={formik.handleBlur}
-                                   name='name' type='text' value={formik.values.name} id="outlined-basic" label="name"
-                                   variant="outlined"/> <br/>
-
+                    <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <TextField
+                            style={{ width: '300px' }}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            name='name'
+                            type='text'
+                            value={formik.values.name}
+                            id="outlined-basic"
+                            label="Name"
+                            variant="outlined"
+                        />
+                        <br />
                     </div>
-
-                    <div style={{textAlign: 'center', marginTop: '20px'}}>
+                    <div style={{ textAlign: 'center', marginTop: '20px' }}>
                         <Button type='submit' variant='contained' color='success'>Edit</Button>
                     </div>
-                </form>}
+                </form>
+            )}
         </>
-    )
-}
+    );
+};
 
-export default EditCategory
+export default EditCategory;

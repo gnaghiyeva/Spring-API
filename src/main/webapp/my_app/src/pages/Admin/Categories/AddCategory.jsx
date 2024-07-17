@@ -2,13 +2,23 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { postCategory } from '../../../api/requests'
 import { useFormik } from 'formik'
-import { Alert, Button, TextField } from '@mui/material'
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import { Button, TextField } from '@mui/material'
+import Swal from "sweetalert2";
+
 const AddCategory = () => {
     const navigate = useNavigate()
     const handleSubmit = async (values, actions) => {
         await postCategory(values)
         actions.resetForm()
+
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `Category added successfully`,
+            showConfirmButton: false,
+            timer: 1500,
+        });
+
         navigate('/admin/categories')
     }
 
